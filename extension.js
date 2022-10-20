@@ -8,8 +8,6 @@ const path = require('node:path');
  */
 function activate(context) {
 
-	console.log('Congratulations, your extension "flutter-localization-generator" is now active!');
-
 	// Add '...args' to get access to the clicked file/directory 
 	let disposable = vscode.commands.registerCommand('flutter-localization-generator.create', function (...args) {
 

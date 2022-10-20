@@ -1,7 +1,8 @@
 {
   "name": "flutter-localization-generator",
-  "displayName": "Flutter Localization Generator",
-  "description": "Flutter Localization made easy. ",
+  "displayName": "localize_it",
+  "description": "An Extension to create the Configuration File for the localize_it Package.",
+  "publisher": "DieGlckswurst",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.72.0"
@@ -24,6 +25,11 @@
     }]
   }
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DieGlueckswurst/localize_it_VSCode_Extension"
+  },
+  "license": "SEE LICENSE IN LICENSE.txt",
   "scripts": {
     "lint": "eslint .",
     "pretest": "npm run lint",
