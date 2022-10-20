@@ -1,8 +1,6 @@
 
 const vscode = require('vscode');
 const fs = require('fs');
-const { resolve } = require('path');
-const { inspect } = require('util');
 const path = require('node:path');
 
 /**
@@ -15,10 +13,8 @@ function activate(context) {
 	// Add '...args' to get access to the clicked file/directory 
 	let disposable = vscode.commands.registerCommand('flutter-localization-generator.create', function (...args) {
 
-
 		// Display a message box to the user
-		vscode.window.showInformationMessage('Created!');
-
+		vscode.window.showInformationMessage('Successfully created Localization Configuration! 🍻🍻🍻');
 
 		var parentDirectory = args[0].path;
 
@@ -34,23 +30,36 @@ function activate(context) {
 		const directoryToCreate = path.join(parentDirectory, folderName);
 
 		// Create Directory inside Parent Directory
-		fs.mkdir(directoryToCreate, { recursive: true });
+		fs.mkdirSync(directoryToCreate, { recursive: true });
 
+		const configFileName = 'localization_config.dart';
 
-		const content = 'exampleContent';
-		const dirPath = path.join(vscode.workspace.rootPath, 'localize_it/');
-		fs.mkdirSync(dirPath, { recursive: true });
+		const configFilePath = path.join(directoryToCreate, configFileName);
 
-		// const filePath = path.join(dirPath, 'localization_config.dart');
-		fs.writeFileSync(filePath, content, 'utf8');
-		
-		const openPath = vscode.Uri.file(filePath);
+		var content = fs.createWriteStream(configFilePath)
+		// Helper to write line by line 
+		const  writeLine = (line) => content.write(`${line}\n`);  	
+		writeLine('import \'package:annotations/annotations.dart\';');	
+		content.write('\n');
+		writeLine('@localized');
+		writeLine('class LocaleConfiguration {');
+		writeLine('  static const String baseLanguageCode = \'de\';');
+		content.write('\n');
+		writeLine('  static const List<String> supportedLanguageCodes = [');
+		writeLine('    \'de\',');
+		writeLine('    \'en\',');
+		writeLine('  ];');
+		writeLine('}');
+		content.end()
+
+		// Write content fo file
+		fs.writeFileSync(configFilePath, content, 'utf8');
+
+		const openPath = vscode.Uri.file(configFilePath);
 		vscode.workspace.openTextDocument(openPath).then(doc => {
 			vscode.window.showTextDocument(doc);
-		});
 
-		
-		
+		});
 	});
 
 	context.subscriptions.push(disposable);

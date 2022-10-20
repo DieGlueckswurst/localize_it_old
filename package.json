@@ -16,7 +16,7 @@
   "contributes": {
     "commands": [{
       "command": "flutter-localization-generator.create",
-      "title": "localize_it: create"
+      "title": "localize_it: Create"
     }],
     "menus": {
       "explorer/context": [{
